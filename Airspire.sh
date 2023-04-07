@@ -30,6 +30,7 @@ function piaware_check() {
 }
 
 function piaware_install() { 
+			     clear
 			     intro
 			     $update
 			     local piaware_installed="$(check_package_installed "piaware")"
@@ -95,63 +96,31 @@ function piaware_uninstall() {
 }
 
 # [FlightRadar24]
-function fr24_install() {
-			  intro
-			  $update
-			  sudo bash -c "$(wget -O - https://repo-feed.flightradar24.com/install_fr24_rpi.sh)"
-
-
 function fr24_check() { 
-			   if [ -x "$(command -v piaware)" ]; then
-			   pc="\e[32mPiaware\e[0m" # green
+			   if [ -x "$(command -v fr24feed)" ]; then
+			   pc="\e[32mFr24\e[0m" # green
 			   else
-			   pc="\e[31mPiaware\e[0m" # red
+			   pc="\e[31mFr24\e[0m" # red
     fi
 }
-
-function piaware_install() { 
+			  
+function fr24_install() { 
+			     clear
 			     intro
 			     $update
-			     local piaware_installed="$(check_package_installed "piaware")"
-			     local dump1090_installed="$(check_package_installed "dump1090-fa")"
-			     
-    if [ "$piaware_installed" = "0" ] && [ "$dump1090_installed" = "0" ]; then
-        		     echo "Piaware is already installed"
+			     local fr24_installed="$(check_package_installed "fr24feed")"		     
+    if [ "$fr24_installed" = "0" ]; then
+        		     echo "Fr24 is already installed"
 			     sleep 2.5
 			     prime
 			     read -p "Press any key to continue..."
-    elif [ "$piaware_installed" = "0" ] && [ "$dump1090_installed" = "1" ]; then
-       			     echo "piaware is installed but dump1090-fa is not installed"
-			     echo ""
-			     echo "installing dump1090-fa"
-			     sudo apt install dump1090-fa -y
-			     echo ""
-			     sleep 4
-			     prime
-			     read -p "Press any key to continue..."
-    elif [ "$piaware_installed" = "1" ] && [ "$dump1090_installed" = "0" ]; then
-        		     echo "piaware is not installed but dump1090-fa is installed"
-			     $update
-			     sudo wget https://flightaware.com/adsb/piaware/files/packages/pool/piaware/f/flightaware-apt-repository/flightaware-apt-repository_1.1_all.deb
-			     sudo dpkg -i flightaware-apt-repository_1.1_all.deb
-			     $update
-			     sudo apt-get install piaware -y
-			     sudo piaware-config allow-auto-updates yes
-			     sudo piaware-config allow-manual-updates yes
-			     echo ""
-			     sleep 4
-			     prime
-			     read -p "Press any key to continue..."
     else
-        echo "Installing piaware and dump1090-fa"
-        $update
-        sudo wget https://flightaware.com/adsb/piaware/files/packages/pool/piaware/f/flightaware-apt-repository/flightaware-apt-repository_1.1_all.deb
-        sudo dpkg -i flightaware-apt-repository_1.1_all.deb
-        sudo apt-get update
-        sudo apt-get install piaware -y
-        sudo piaware-config allow-auto-updates yes
-        sudo piaware-config allow-manual-updates yes
-        sudo apt-get install dump1090-fa -y
+        echo "Installing fr24feed"
+        intro
+	$update
+	sudo apt install wget -y git dpkg dpkg-dev make cmake 
+	sudo wget https://repo-feed.flightradar24.com/rpi_binaries/fr24feed_1.0.34-0_armhf.deb
+	sudo dpkg -i fr24feed_1.0.34-0_armhf.deb    #test🟢🔴🔺🔻🚩🔽🔼✨ #
         echo ""
         sleep 4
         prime
@@ -159,7 +128,17 @@ function piaware_install() {
     fi
 }
 
-function piaware_uninstall() {
+function fr24 _uninstall() {
+			       sudo systemctl stop fr24feed
+			       sudo apt-get remove fr24feed -y
+			       sudo rm -rf /etc/fr24feed
+			       sudo apt-get autoremove -y
+}
+
+			       
+
+
+
 			       sudo systemctl stop piaware
 			       sudo systemctl stop dump1090-fa
 			       sudo apt-get remove piaware dump1090-fa -y
@@ -220,51 +199,6 @@ function piaware_uninstall() {
 
 
 
-function piaware_install () {
-    intro
-    local piaware_installed="$(check_package_installed "piaware")"
-    local dump1090_installed="$(check_package_installed "dump1090-fa")"
-    if [ "$piaware_installed" = "0" ] && [ "$dump1090_installed" = "0" ]; then
-        echo "piaware & dump1090-fa are already installed"
-        sleep 2.5
-        prime
-        read -p "Press any key to continue..."
-    elif [ "$piaware_installed" = "0" ] && [ "$dump1090_installed" = "1" ]; then
-        echo "piaware is installed but dump1090-fa is not installed"
-        sudo apt install dump1090-fa -y
-        echo ""
-        sleep 4
-        prime
-        read -p "Press any key to continue..."
-    elif [ "$piaware_installed" = "1" ] && [ "$dump1090_installed" = "0" ]; then
-        echo "piaware is not installed but dump1090-fa is installed"
-        sudo apt update 
-        sudo wget https://flightaware.com/adsb/piaware/files/packages/pool/piaware/f/flightaware-apt-repository/flightaware-apt-repository_1.1_all.deb
-        sudo dpkg -i flightaware-apt-repository_1.1_all.deb
-        sudo apt-get update
-        sudo apt-get install piaware -y
-        sudo piaware-config allow-auto-updates yes
-        sudo piaware-config allow-manual-updates yes
-        echo ""
-        sleep 4
-        prime
-        read -p "Press any key to continue..."
-    else
-        echo "Installing piaware and dump1090-fa"
-        sudo apt update 
-        sudo wget https://flightaware.com/adsb/piaware/files/packages/pool/piaware/f/flightaware-apt-repository/flightaware-apt-repository_1.1_all.deb
-        sudo dpkg -i flightaware-apt-repository_1.1_all.deb
-        sudo apt-get update
-        sudo apt-get install piaware -y
-        sudo piaware-config allow-auto-updates yes
-        sudo piaware-config allow-manual-updates yes
-        sudo apt-get install dump1090-fa -y
-        echo ""
-        sleep 4
-        prime
-        read -p "Press any key to continue..."
-    fi
-}
 
 function main () {
     echo "┌─────────────┐"
