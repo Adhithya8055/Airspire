@@ -1,5 +1,7 @@
 # Airspire ( All in one Aero Manager ) - WIP
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 This is a custom one-click installation of ACARS Decoder, Tailor-made for 
 RTL-SDR users.
 
@@ -110,9 +112,7 @@ Any additional information goes here
 
 Add badges from somewhere like: [shields.io](https://shields.io/)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+
 
 ## Color Reference
 
