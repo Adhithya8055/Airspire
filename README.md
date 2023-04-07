@@ -1,5 +1,4 @@
 # Airspire ( All in one Aero Manager ) - WIP
-# ACARSDEC RTL-SDR
 
 This is a custom one-click installation of ACARS Decoder, Tailor-made for 
 RTL-SDR users.
