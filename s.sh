@@ -2,7 +2,6 @@
 
 # define function for updating Airspire
 function update_airspire {
-    git stash # stash local changes
     git pull origin main # update from remote repository
     if [ $? -eq 0 ]; then # check if update was successful
         echo "Airspire has been updated. Relaunching..."
@@ -21,7 +20,12 @@ if ! command -v git &> /dev/null; then
 fi
 
 # navigate to Airspire directory
-cd ~/Airspire || { echo "Airspire directory not found. Exiting..."; exit 1; }
+if [ -d "/home/$USER/Airspire" ]; then
+    cd "/home/$USER/Airspire"
+else
+    mkdir -p "/home/$USER/Airspire"
+    cd "/home/$USER/Airspire"
+fi
 
 # check for updates
 git remote update > /dev/null 2>&1
