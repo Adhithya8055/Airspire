@@ -22,7 +22,7 @@ while true; do
     read update_choice
     if [ "$update_choice" = "y" ]; then
       echo "Airspire has been updated. Relaunching..."
-      exec sudo bash "$SCRIPT_DIR/airspire.sh"
+      exec sudo bash "$SCRIPT_DIR/s.sh"
     fi
   else
     echo "Airspire is up to date. Continuing..."
