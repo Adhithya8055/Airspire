@@ -18,14 +18,10 @@ if [ "$(git rev-list --count --left-right HEAD...@{upstream} 2>/dev/null | awk '
 
   # Launch the updated script
   echo "Launching updated airspire..."
-  bash "$SCRIPT_DIR/airspire.sh"
-
-  # Exit the current instance of the script
-  exit 0
+  exec bash "$SCRIPT_DIR/airspire.sh"
+else
+  # Add your existing code here
+  echo "ok"
+  #echo "Ayo"
 fi
 
-# If no update is available, continue with the existing script
-echo "No update available. Continuing with existing airspire..."
-# Add your existing code here
-echo "ok "
-echo "Ayo"
