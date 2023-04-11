@@ -98,9 +98,9 @@ function piaware_uninstall() {
 # [FlightRadar24]
 function fr24_check() { 
 			   if [ -x "$(command -v fr24feed)" ]; then
-			   pc="\e[32mFr24\e[0m" # green
+			   frc="\e[32mFr24\e[0m" # green
 			   else
-			   pc="\e[31mFr24\e[0m" # red
+			   frc="\e[31mFr24\e[0m" # red
     fi
 }
 			  
@@ -139,9 +139,9 @@ function fr24_uninstall() {
 # [Radarbox]
 function rbfeeder_check() { 
 			   if [ -x "$(command -v rbfeeder)" ]; then
-			   pc="\e[32mRadarbox\e[0m" # green
+			   rbc="\e[32mRadarbox\e[0m" # green
 			   else
-			   pc="\e[31mRadarbox\e[0m" # red
+			   rbc="\e[31mRadarbox\e[0m" # red
     fi
 }
 			  
@@ -188,9 +188,9 @@ function main () {
     piaware_check
     echo -e "1 - $pc"
     echo ""
-    echo "2 - Flightradar24"
+    echo "2 - $frc"
     echo ""
-    echo "3 - Radarbox"
+    echo "3 - $rbc"
     echo ""
     echo "4 - Opensky-Network"
     echo ""
@@ -220,7 +220,7 @@ function main () {
 }
 
 function feeder_menu () {
-    if [[ $choice == "$pc" || $choice == "Flightradar24" || $choice == "Radarbox" || $choice == "Opensky-Network" || $choice == "AdsbExchange" || $choice == "AdsbHub" ]]; then
+    if [[ $choice == "$pc" || $choice == "$frc" || $choice == "$rbc" || $choice == "Opensky-Network" || $choice == "AdsbExchange" || $choice == "AdsbHub" ]]; then
         intro
         echo -e "\033[35mYou have selected : $choice\033[0m"
         echo ""
@@ -243,18 +243,6 @@ function feeder_menu () {
         fi
     fi
 }
-
-function check_package_installed () {
-    local package_name="$1"
-    if dpkg-query -W "$package_name" >/dev/null 2>&1; then
-        echo "0" # package is installed
-    else
-        echo "1" # package is not installed
-    fi
-}
-
-
-
 
 
 INT2="\033[33m  Streamline your aviation setup with one simple installation\033[0m"
@@ -332,6 +320,8 @@ function prime () {
 		    main
 		    feeder_menu
 		    piaware_install
+		    fr24_install
+		    rbfeeder_install
 }
 
 boot_intro
@@ -384,9 +374,7 @@ No tasks to perform on exit
 
 ######################################################
 
-#copy the script 
-
-/usr/local/bin/
+#/usr/local/bin/
 
 #1.Update and Upgrade - ✅
 
@@ -424,11 +412,11 @@ function armm2 () {
 #3A.ModesMixer2 Installation - X (raspberry [docker])
 function docmm2 () {
 		     sudo mkdir 
-cd my-docker-project
+#cd my-docker-project
 
 # Create a Docker Compose file with the specified settings
-cat > docker-compose.yml <<EOF
-version: "3"
+#cat > docker-compose.yml <<EOF
+#version: "3"
 
 services:
   piaware:
