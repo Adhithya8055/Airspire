@@ -19,8 +19,25 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
+# set Airspire path based on the current OS
+if [[ $(uname -s) == "Linux" ]]; then
+    if [[ -d "/home/kali/Airspire" ]]; then
+        AIRSPIRE_PATH="/home/kali/Airspire"
+    elif [[ -d "/home/ubuntu/Airspire" ]]; then
+        AIRSPIRE_PATH="/home/ubuntu/Airspire"
+    elif [[ -d "/home/pi/Airspire" ]]; then
+        AIRSPIRE_PATH="/home/pi/Airspire"
+    else
+        echo "Airspire directory not found. Please set the AIRSPIRE_PATH variable manually."
+        exit 1
+    fi
+else
+    echo "Unsupported operating system."
+    exit 1
+fi
+
 # navigate to Airspire directory
-cd /home/$USER/Airspire
+cd "$AIRSPIRE_PATH"
 
 # check for updates
 git remote update > /dev/null 2>&1
@@ -43,4 +60,3 @@ fi
 # execute Airspire
 echo "test"
 echo "telmax"
-
