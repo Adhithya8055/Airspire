@@ -14,7 +14,7 @@ if [ -d ".git" ]; then
   git fetch
 
   # Compare the local branch with the remote branch
-  if [ "$(git rev-list HEAD...origin/master --count)" -gt 0 ]; then
+  if [ "$(git rev-list HEAD..origin/master --count)" -gt 0 ]; then
     # Update the local repository
     git pull
 
@@ -33,3 +33,4 @@ fi
 # If no update is available or the script is not in a Git repository, continue with the existing script
 echo "No update available. Continuing with existing airspire..."
 # Add your existing code here
+
