@@ -9,6 +9,41 @@
 
 #########################################################################################################################
 
+function installation_checks() {
+
+function piaware_check() { 
+			   if [ -x "$(command -v piaware)" ]; then
+			   pc="\e[32mPiaware\e[0m" # green
+			   else
+			   pc="\e[31mPiaware\e[0m" # red
+    fi
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INT2="\033[33m  Streamline your aviation setup with one simple installation\033[0m"
 INT="   
           
@@ -120,14 +155,7 @@ function check_package_installed () { # fr ins
     fi
 }
 
-# [ Piaware ]
-function piaware_check() { 
-			   if [ -x "$(command -v piaware)" ]; then
-			   pc="\e[32mPiaware\e[0m" # green
-			   else
-			   pc="\e[31mPiaware\e[0m" # red
-    fi
-}
+
 
 function piaware_install() { 
 			     clear
