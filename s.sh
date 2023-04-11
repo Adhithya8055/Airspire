@@ -22,6 +22,6 @@ if [ "$(git rev-list --count --left-right HEAD...@{upstream} 2>/dev/null | awk '
 else
   # Add your existing code here
   echo "ok"
-  #echo "Ayo"
+  echo "Ayo"
 fi
 
