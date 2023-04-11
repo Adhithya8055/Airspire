@@ -20,7 +20,7 @@ if ! command -v git &> /dev/null; then
 fi
 
 # navigate to Airspire directory
-cd "$(dirname "$(readlink -f "$0")")/Airspire"
+cd "$(dirname "$(readlink -f "$0")")/"
 
 # check for updates
 git remote update > /dev/null 2>&1
