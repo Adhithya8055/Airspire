@@ -1,65 +1,36 @@
-#!/bin/bash -e
+#!/bin/bash
 
-# Get the current directory of the script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$(dirname "$0")"
 
-# define function for updating Airspire
-function update_airspire {
-    cd "$DIR" || exit
-    if [[ $(git status --porcelain) ]]; then # check for local changes
-        echo "There are local changes to s.sh. Do you want to stash them before updating? [y/n]"
-        read -r response
-        if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            git stash save --keep-index "Stashing changes before updating" # stash changes
-        else
-            echo "Please commit or stash your changes and try again."
-            exit 1
+function updateAirspire {
+    echo "An update is available. Do you want to update? [y/n]"
+    read update
+    if [ "$update" = "y" ]; then
+        if ! git pull; then
+            echo "An error occurred while updating Airspire."
+            return 1
         fi
-    fi
-    git pull origin main # update from remote repository
-    if [ $? -eq 0 ]; then # check if update was successful
         echo "Airspire has been updated. Relaunching..."
-        exec "$0" "$@" # relaunch the script
-    else
-        echo "An error occurred while updating Airspire."
+        exec bash "$0"
+        exit $?
     fi
 }
 
 echo "Launching Airspire..."
 
-# check if git is installed
-if ! command -v git &> /dev/null; then
-    echo "Git is not installed. Please install Git and try again."
-    exit 1
-fi
-
-# check if Airspire directory exists
-if [ ! -d "$DIR" ]; then
-    echo "Airspire directory not found. Exiting..."
-    exit 1
-fi
-
-# navigate to Airspire directory
-cd "$DIR" || exit
-
-# check for updates
-git remote update > /dev/null 2>&1
-LOCAL=$(git rev-parse HEAD)
-REMOTE=$(git rev-parse @{u})
-
-# check if local repository is up to date
-if [ $LOCAL = $REMOTE ]; then
-    echo "Airspire is up to date. Continuing..."
+if ! git remote update > /dev/null 2>&1; then
+    echo "Failed to fetch updates. Launching Airspire..."
 else
-    echo "An update is available. Do you want to update? [y/n]"
-    read -r response
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        update_airspire # call function to update Airspire
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse "$UPSTREAM")
+    if [ $LOCAL != $REMOTE ]; then
+        updateAirspire || true
     else
-        echo "Continuing with existing version of Airspire..."
+        echo "Airspire is up to date. Continuing..."
     fi
 fi
 
-# execute Airspire
-
-echo "telmax"
+# your script goes here
+echo "test"
+echo "telcmax"
