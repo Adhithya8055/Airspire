@@ -128,75 +128,54 @@ function fr24_install() {
     fi
 }
 
-function fr24 _uninstall() {
+function fr24_uninstall() {
 			       sudo systemctl stop fr24feed
 			       sudo apt-get remove fr24feed -y
 			       sudo rm -rf /etc/fr24feed
 			       sudo apt-get autoremove -y
 }
 
-			       
+			     
+# [Radarbox]
+function rbfeeder_check() { 
+			   if [ -x "$(command -v rbfeeder)" ]; then
+			   pc="\e[32mRadarbox\e[0m" # green
+			   else
+			   pc="\e[31mRadarbox\e[0m" # red
+    fi
+}
+			  
+function rbfeeder_install() { 
+			     clear
+			     intro
+			     $update
+			     local fr24_installed="$(check_package_installed "rbfeeder")"		     
+    if [ "$rbfeeder_installed" = "0" ]; then
+        		     echo "radarbox is already installed"
+			     sleep 2.5
+			     prime
+			     read -p "Press any key to continue..."
+    else
+        echo "Installing Radarbox"
+        intro
+	$update
+	sudo bash -c "$(wget -O - http://apt.rb24.com/inst_rbfeeder.sh)"
+	sudo apt update && sudo apt upgrade -y
+	sudo apt-get install mlat-client -y
+	sudo systemctl restart rbfeeder
+	sleep 4
+        prime
+        read -p "Press any key to continue..."
+    fi
+}
 
+function rbfeeder_uninstall() {
+			       ssudo systemctl stop rbfeeder
 
-
-			       sudo systemctl stop piaware
-			       sudo systemctl stop dump1090-fa
-			       sudo apt-get remove piaware dump1090-fa -y
-			       sudo apt purge -y piaware dump1090-fa
-			       sudo apt-get remove flightaware-apt-repository -y
+			       sudo apt-get remove fr24feed -y
+			       sudo rm -rf /etc/fr24feed
 			       sudo apt-get autoremove -y
-			       sudo apt-get autoclean
-			       sudo rm -rf /etc/piaware.conf /usr/lib/piaware /usr/share/dump1090-fa /etc/lighttpd/conf-available/89-dump1090-fa.conf /etc/lighttpd/conf-enabled/89-dump1090-fa.conf
-			       echo ""
-			       sleep 4
-			       prime
-			       read -p "Press any key to continue..."
-
-
-			       
-
-
-
-
-
-
-
-			     
-			     
-			     
-			     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
