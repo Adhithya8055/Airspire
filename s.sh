@@ -3,12 +3,19 @@
 # Get the current directory of the script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# set permissions for the script
-chmod +x "$DIR/s.sh"
-
 # define function for updating Airspire
 function update_airspire {
     cd "$DIR" || exit
+    if [[ $(git status --porcelain) ]]; then # check for local changes
+        echo "There are local changes to s.sh. Do you want to stash them before updating? [y/n]"
+        read -r response
+        if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+            git stash save --keep-index "Stashing changes before updating" # stash changes
+        else
+            echo "Please commit or stash your changes and try again."
+            exit 1
+        fi
+    fi
     git pull origin main # update from remote repository
     if [ $? -eq 0 ]; then # check if update was successful
         echo "Airspire has been updated. Relaunching..."
@@ -54,6 +61,5 @@ else
 fi
 
 # execute Airspire
-
+echo "test"
 echo "telcmax"
-
