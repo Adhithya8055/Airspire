@@ -9,7 +9,22 @@
 
 #########################################################################################################################
 
-#!/bin/bash
+INT2="\033[33m  Streamline your aviation setup with one simple installation\033[0m"
+INT="   
+          
+           _                _           
+     /\   (_)              (_)          
+    /  \   _ _ __ ___ _ __  _ _ __ ___  
+   / /\ \ | | '__/ __| '_ \| | '__/ _ \ 
+  / ____ \| | |  \__ \ |_) | | | |  __/ 
+ /_/    \_\_|_|  |___/ .__/|_|_|  \___| 
+                     | |                
+                     |_|                
+
+"
+name="                   Developed by Arcticfox"
+line="********************************************************************************"
+v="                             Version 1.0" 
 
 cd "$(dirname "$0")"
 
@@ -27,7 +42,49 @@ function updateAirspire {
     fi
 }
 
-echo "Launching Airspire..."
+
+function boot_intro () {
+		    clear
+		    echo "$line" 
+		    echo -e "\033[31m$INT\033[0m"
+		    echo -e "\033[35m$name\033[0m"
+		    echo ""
+		    echo "$line"
+		    sleep 0.6
+		    clear
+		    echo "$line"
+		    echo -e "\033[32m$INT\033[0m"
+		    echo -e "\033[34m$name\033[0m"
+		    echo ""
+		    echo "$line"
+		    sleep 0.6
+		    clear
+		    echo "$line"
+		    echo -e "\033[33m$INT\033[0m"
+		    echo -e "\033[33m$name\033[0m"
+		    echo ""
+		    echo "$line"
+		    sleep 0.6
+		    clear
+		    echo "$line"
+		    echo -e "\033[34m$INT\033[0m"
+		    echo -e "\033[32m$name\033[0m"
+		    echo ""
+		    echo "$line"
+		    sleep 0.6
+		    clear
+		    echo "$line"
+		    echo -e "\033[35m$INT\033[0m"
+		    echo -e "\033[31m$name\033[0m"
+		    echo ""
+		    echo "$line"
+		    sleep 0.6
+		    clear
+}
+
+
+
+echo "$boot_intro"
 
 if ! git remote update > /dev/null 2>&1; then
     echo "Failed to fetch updates. Launching Airspire..."
@@ -288,22 +345,7 @@ function feeder_menu () {
 }
 
 
-INT2="\033[33m  Streamline your aviation setup with one simple installation\033[0m"
-INT="   
-          
-           _                _           
-     /\   (_)              (_)          
-    /  \   _ _ __ ___ _ __  _ _ __ ___  
-   / /\ \ | | '__/ __| '_ \| | '__/ _ \ 
-  / ____ \| | |  \__ \ |_) | | | |  __/ 
- /_/    \_\_|_|  |___/ .__/|_|_|  \___| 
-                     | |                
-                     |_|                
 
-"
-name="                   Developed by Arcticfox"
-line="********************************************************************************"
-v="                             Version 1.0"
 
 function intro () {
 		    clear
@@ -319,44 +361,7 @@ function intro () {
 		    echo -e ""
 }
 
-function boot_intro () {
-		    clear
-		    echo "$line" 
-		    echo -e "\033[31m$INT\033[0m"
-		    echo -e "\033[35m$name\033[0m"
-		    echo ""
-		    echo "$line"
-		    sleep 0.6
-		    clear
-		    echo "$line"
-		    echo -e "\033[32m$INT\033[0m"
-		    echo -e "\033[34m$name\033[0m"
-		    echo ""
-		    echo "$line"
-		    sleep 0.6
-		    clear
-		    echo "$line"
-		    echo -e "\033[33m$INT\033[0m"
-		    echo -e "\033[33m$name\033[0m"
-		    echo ""
-		    echo "$line"
-		    sleep 0.6
-		    clear
-		    echo "$line"
-		    echo -e "\033[34m$INT\033[0m"
-		    echo -e "\033[32m$name\033[0m"
-		    echo ""
-		    echo "$line"
-		    sleep 0.6
-		    clear
-		    echo "$line"
-		    echo -e "\033[35m$INT\033[0m"
-		    echo -e "\033[31m$name\033[0m"
-		    echo ""
-		    echo "$line"
-		    sleep 0.6
-		    clear
-}
+
 
 function prime () {
 		    intro
