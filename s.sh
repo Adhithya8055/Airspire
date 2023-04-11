@@ -1,15 +1,29 @@
 #!/bin/bash
 
-# Add the Git repository URL as a remote called "origin"
-#git remote add origin https://github.com/Adhithya8055/Airspire.git
+echo "Launching airspire..."
 
-# Pull changes from the remote "origin"
-#git pull origin main
-git pull origin main >/dev/null 2>&1
+# Navigate to the directory where the script is located
+cd /path/to/airspire
+
+# Check for updates
+git fetch
+
+# Compare the local branch with the remote branch
+if [ "$(git rev-list HEAD...origin/master --count)" -gt 0 ]; then
+  # Update the local repository
+  git pull
+
+  # Launch the updated script
+  echo "Launching updated airspire..."
+  bash airspire.sh
+
+  # Exit the current instance of the script
+  exit 0
+fi
+
+# If no update is available, continue with the existing script
+echo "No update available. Continuing with existing airspire..."
+# Add your existing code here
 
 
-# Run the rest of your installation script here...
-
-
-echo "dome"
-echo "null"
+echo "this is a test"
