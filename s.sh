@@ -27,3 +27,5 @@ echo "No update available. Continuing with existing airspire..."
 
 
 echo "this is a test"
+
+echo "N5"
