@@ -1,37 +1,46 @@
 #!/bin/bash
 
-echo "Launching airspire..."
-
-# Get the absolute path of the directory where the script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Navigate to the directory where the script is located
-cd "$SCRIPT_DIR"
-
-while true; do
-  # Check for updates
-  git fetch
-
-  # Compare the local branch with the remote branch
-  if [ "$(git rev-list --count --left-right HEAD...@{upstream} 2>/dev/null | awk '{print $2}')" != "0" ]; then
-    # Update the local repository
-    git pull
-
-    # Launch the updated script
-    echo "An update is available. Do you want to update? [y/n]"
-    read update_choice
-    if [ "$update_choice" = "y" ]; then
-      echo "Airspire has been updated. Relaunching..."
-      exec sudo bash "$SCRIPT_DIR/s.sh"
+# define function for updating Airspire
+function update_airspire {
+    git pull origin main # update from remote repository
+    if [ $? -eq 0 ]; then # check if update was successful
+        echo "Airspire has been updated. Relaunching..."
+        exec "$0" "$@" # relaunch the script
+    else
+        echo "An error occurred while updating Airspire."
     fi
-  else
+}
+
+echo "Launching Airspire..."
+
+# check if git is installed
+if ! command -v git &> /dev/null; then
+    echo "Git is not installed. Please install Git and try again."
+    exit 1
+fi
+
+# navigate to Airspire directory
+cd /home/$USER/Airspire
+
+# check for updates
+git remote update > /dev/null 2>&1
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse @{u})
+
+# check if local repository is up to date
+if [ $LOCAL = $REMOTE ]; then
     echo "Airspire is up to date. Continuing..."
-    # Add your existing code here
-    echo "tefst"
-    echo "telmax"
-    break
-  fi
-  
-  # Sleep for 5 seconds before checking for updates again
-  sleep 5
-done
+else
+    echo "An update is available. Do you want to update? [y/n]"
+    read -r response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+        update_airspire # call function to update Airspire
+    else
+        echo "Continuing with existing version of Airspire..."
+    fi
+fi
+
+# execute Airspire
+echo "test"
+echo "telmax"
+
