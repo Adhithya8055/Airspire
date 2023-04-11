@@ -28,6 +28,7 @@ while true; do
     echo "Airspire is up to date. Continuing..."
     # Add your existing code here
     echo "test"
+    break
   fi
   
   # Sleep for 5 seconds before checking for updates again
