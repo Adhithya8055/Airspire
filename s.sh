@@ -2,6 +2,7 @@
 
 # define function for updating Airspire
 function update_airspire {
+    git stash # stash local changes
     git pull origin main # update from remote repository
     if [ $? -eq 0 ]; then # check if update was successful
         echo "Airspire has been updated. Relaunching..."
@@ -19,25 +20,8 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
-# set Airspire path based on the current OS
-if [[ $(uname -s) == "Linux" ]]; then
-    if [[ -d "/home/kali/Airspire" ]]; then
-        AIRSPIRE_PATH="/home/kali/Airspire"
-    elif [[ -d "/home/ubuntu/Airspire" ]]; then
-        AIRSPIRE_PATH="/home/ubuntu/Airspire"
-    elif [[ -d "/home/pi/Airspire" ]]; then
-        AIRSPIRE_PATH="/home/pi/Airspire"
-    else
-        echo "Airspire directory not found. Please set the AIRSPIRE_PATH variable manually."
-        exit 1
-    fi
-else
-    echo "Unsupported operating system."
-    exit 1
-fi
-
 # navigate to Airspire directory
-cd "$AIRSPIRE_PATH"
+cd ~/Airspire || { echo "Airspire directory not found. Exiting..."; exit 1; }
 
 # check for updates
 git remote update > /dev/null 2>&1
@@ -58,5 +42,5 @@ else
 fi
 
 # execute Airspire
-echo "te"
+echo "test"
 echo "telmax"
