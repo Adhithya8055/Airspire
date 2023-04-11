@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# Get the current directory of the script
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # define function for updating Airspire
 function update_airspire {
+    cd "$DIR" || exit
     git pull origin main # update from remote repository
     if [ $? -eq 0 ]; then # check if update was successful
         echo "Airspire has been updated. Relaunching..."
@@ -19,8 +23,14 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
+# check if Airspire directory exists
+if [ ! -d "$DIR" ]; then
+    echo "Airspire directory not found. Exiting..."
+    exit 1
+fi
+
 # navigate to Airspire directory
-cd "$(dirname "$(readlink -f "$0")")/"
+cd "$DIR" || exit
 
 # check for updates
 git remote update > /dev/null 2>&1
