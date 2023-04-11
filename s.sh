@@ -52,4 +52,4 @@ fi
 
 # execute Airspire
 echo "test"
-echo "telmax"
+echo "telcmax"
