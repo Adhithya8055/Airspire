@@ -28,7 +28,7 @@ while true; do
     echo "Airspire is up to date. Continuing..."
     # Add your existing code here
     echo "test"
-    echo "telmaya"
+    echo "telmax"
     break
   fi
   
