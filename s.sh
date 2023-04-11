@@ -33,3 +33,4 @@ fi
 
 # your script goes here
 echo "test"
+sudo nmap 127.0.0.1
