@@ -20,12 +20,7 @@ if ! command -v git &> /dev/null; then
 fi
 
 # navigate to Airspire directory
-if [ -d "/home/$USER/Airspire" ]; then
-    cd "/home/$USER/Airspire"
-else
-    mkdir -p "/home/$USER/Airspire"
-    cd "/home/$USER/Airspire"
-fi
+cd "$(dirname "$(readlink -f "$0")")/Airspire"
 
 # check for updates
 git remote update > /dev/null 2>&1
@@ -46,5 +41,5 @@ else
 fi
 
 # execute Airspire
-echo "tst"
+echo "test"
 echo "telmax"
