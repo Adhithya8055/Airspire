@@ -33,4 +33,3 @@ fi
 
 # your script goes here
 echo "test"
-echo "telcmax"
