@@ -46,5 +46,5 @@ else
 fi
 
 # execute Airspire
-echo "test"
+echo "tst"
 echo "telmax"
