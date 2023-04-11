@@ -28,4 +28,4 @@ fi
 echo "No update available. Continuing with existing airspire..."
 # Add your existing code here
 echo "ok "
-
+echo "Ayo"
