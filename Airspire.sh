@@ -9,17 +9,93 @@
 
 #########################################################################################################################
 
-function installation_checks() {
+function check_package_installed () { #p1
+    local package_name="$1"
+    if [ -x "$(command -v $package_name)" ]; then
+        echo "0" # package is installed
+    else
+        echo "1" # package is not installed
+    fi
+}
 
-function piaware_check() { 
-			   if [ -x "$(command -v piaware)" ]; then
-			   pc="\e[32mPiaware\e[0m" # green
-			   else
-			   pc="\e[31mPiaware\e[0m" # red
+function check_package() {
+    local package_name="$1"
+    if [ $(check_package_installed $package_name) -eq 0 ]; then
+        echo -e "\e[32m${package_name}\e[0m" # set package to green "yes"
+    else
+        echo -e "\e[31m${package_name}\e[0m" # set package to red "no"
     fi
 }
 
 
+function main () { #later
+    echo "1 - $(check_package piaware)"
+    echo "2 - $(check_package fr24feed)"
+    echo "3 - $(check_package rbfeeder)"
+}
+
+main
+
+
+function feeder_menu () {
+    if [[ $choice == "$pc" || $choice == "$frc" || $choice == "$rbc" || $choice == "Opensky-Network" || $choice == "AdsbExchange" || $choice == "AdsbHub" ]]; then
+        intro
+        echo -e "\033[35mYou have selected : $choice\033[0m"
+        echo ""
+        echo -e "\033[33mSelect from the Following\033[0m"
+        echo ""
+        echo "0. Back to Main menu"
+        echo ""
+        echo "1 - Install"
+        echo ""
+        echo "2 - uninstall"
+        echo ""
+        echo "3 - Configure"
+        echo ""
+        echo "4 - Activity"
+        echo ""
+        read -p "Enter the number of the action you want to perform: " number
+        echo ""
+        if [[ $number == 0 ]]; then
+            prime
+        elif [[ $number == 1 ]]; then
+            if [[ $choice == "$pc" ]]; then
+                piaware_install
+            elif [[ $choice == "$frc" ]]; then
+                fr24_install
+            elif [[ $choice == "$rbc" ]]; then
+                rbfeeder_install
+            fi
+        elif [[ $number == 2 ]]; then
+            if [[ $choice == "$pc" ]]; then
+                piaware_uninstall
+            elif [[ $choice == "$frc" ]]; then
+                fr24_uninstall
+            elif [[ $choice == "$rbc" ]]; then
+                rbfeeder_uninstall
+            fi
+        elif [[ $number == 3 ]]; then
+            if [[ $choice == "$pc" ]]; then
+                piaware_configure
+            elif [[ $choice == "$frc" ]]; then
+                fr24_configure
+            elif [[ $choice == "$rbc" ]]; then
+                rbfeeder_configure
+            fi
+        elif [[ $number == 4 ]]; then
+            if [[ $choice == "$pc" ]]; then
+                piaware_activity
+            elif [[ $choice == "$frc" ]]; then
+                fr24_activity
+            elif [[ $choice == "$rbc" ]]; then
+                rbfeeder_activity
+            fi
+        else
+            echo "Invalid input, please try again."
+            sleep 2.5
+        fi
+    fi
+}
 
 
 
@@ -296,6 +372,33 @@ function rbfeeder_install() {
         read -p "Press any key to continue..."
     fi
 }
+
+
+function rbfeeder_install() { 
+			     clear
+			     intro
+			     $update
+			     local fr24_installed="$(check_package_installed "rbfeeder")"		     
+    if [ "$rbfeeder_installed" = "0" ]; then
+        		     echo "radarbox is already installed"
+			     sleep 2.5
+			     prime
+			     read -p "Press any key to continue..."
+    else
+        echo "Installing Radarbox"
+        intro
+	$update
+	sudo bash -c "$(wget -O - http://apt.rb24.com/inst_rbfeeder.sh)"
+	sudo apt update && sudo apt upgrade -y
+	sudo apt-get install mlat-client -y
+	sudo systemctl restart rbfeeder
+	sleep 4
+        prime
+        read -p "Press any key to continue..."
+    fi
+}
+
+
 
 function rbfeeder_uninstall() {
 			       ssudo systemctl stop rbfeeder
