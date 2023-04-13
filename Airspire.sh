@@ -9,7 +9,8 @@
 
 #########################################################################################################################
 
-function check_package_installed () { #p1
+# A. Package cheker / installation indication
+function check_package_installed () { 
     local package_name="$1"
     if [ -x "$(command -v $package_name)" ]; then
         echo "0" # package is installed
@@ -17,28 +18,18 @@ function check_package_installed () { #p1
         echo "1" # package is not installed
     fi
 }
-
 function check_package() {
     local package_name="$1"
     if [ $(check_package_installed $package_name) -eq 0 ]; then
-        echo -e "\e[32m${package_name}\e[0m" # set package to green "yes"
+        echo -e "\e[32m${package_name}\e[0m" # green - installed
     else
-        echo -e "\e[31m${package_name}\e[0m" # set package to red "no"
+        echo -e "${package_name}" # white - uninstalled
     fi
 }
 
-
-function main () { #later
-    echo "1 - $(check_package piaware)"
-    echo "2 - $(check_package fr24feed)"
-    echo "3 - $(check_package rbfeeder)"
-}
-
-main
-
-
+#choice execution  
 function feeder_menu () {
-    if [[ $choice == "$pc" || $choice == "$frc" || $choice == "$rbc" || $choice == "Opensky-Network" || $choice == "AdsbExchange" || $choice == "AdsbHub" ]]; then
+    if [[ $choice == "$piaware_c" || $choice == "$frc" || $choice == "$rbc" || $choice == "Opensky-Network" || $choice == "AdsbExchange" || $choice == "AdsbHub" ]]; then
         intro
         echo -e "\033[35mYou have selected : $choice\033[0m"
         echo ""
@@ -409,6 +400,14 @@ function rbfeeder_uninstall() {
 }
 
 
+
+[ later ]function main () { #later
+    echo "1 - $(check_package piaware)"
+    echo "2 - $(check_package fr24feed)"
+    echo "3 - $(check_package rbfeeder)"
+}
+
+main
 
 function main () {
     echo "┌─────────────┐"
