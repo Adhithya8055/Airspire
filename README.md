@@ -1,3 +1,3 @@
-# Airspire ( All in one Aero Manager ) - WIP
+# Airspire ( All in one Aero Manager ) 
 
-### Checkout dev branch for more info.
+
